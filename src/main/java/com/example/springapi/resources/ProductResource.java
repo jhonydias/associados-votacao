@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/products")
 public class ProductResource {
 
-    //FALTA SABER QUAL TAG COLOCAR
+    @Autowired
     private ProductService service;
 
     @GetMapping
