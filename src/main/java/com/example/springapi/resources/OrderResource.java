@@ -1,26 +1,20 @@
 package com.example.springapi.resources;
-
 import com.example.springapi.dtos.OrderDTO;
-import com.example.springapi.dtos.ProductDTO;
 import com.example.springapi.entities.*;
 import com.example.springapi.entities.enums.OrderStatus;
 import com.example.springapi.services.OrderItemService;
 import com.example.springapi.services.OrderService;
 import com.example.springapi.services.ProductService;
 import com.example.springapi.services.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.*;
 
 @RestController
-@RequestMapping(value = "/orders")
+@RequestMapping(value = "/api")
 public class OrderResource {
 
     @Autowired
@@ -38,19 +32,19 @@ public class OrderResource {
     private OrderService orderService;
 
 
-    @GetMapping
+    @GetMapping("/orders")
     public ResponseEntity<List<Order>> findAll() {
         List<Order> list = service.findAll();
                 return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/orders/{id}")
     public ResponseEntity<Order> findById(@PathVariable Long id) {
         Order obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/orders/save")
     public ResponseEntity<Object> insert(@RequestBody @Valid OrderDTO orderDTO){
         Optional<User> clientId = Optional.ofNullable(userService.findById(orderDTO.getClientId()));
         if (clientId.isPresent()){
@@ -68,15 +62,16 @@ public class OrderResource {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
     }
 
-    @PostMapping(value = "/save-cascade")
+    @PostMapping(value = "/orders/save-cascade")
     public ResponseEntity<Object> insertCascade(@RequestBody @Valid OrderDTO orderDTO){
-        Optional<User> clientId = Optional.ofNullable(userService.findById(orderDTO.getClientId()));
+        Optional<User> clientId = Optional.ofNullable(userService.findById(orderDTO.getClient().getId()));
         if (clientId.isPresent()){
 
             Order order = new Order();
             order.setMoment(orderDTO.getMoment());
-            order.setOrderStatus(orderDTO.getOrderStatus());
             order.setClient(orderDTO.getClient());
+            order.setOrderStatus(orderDTO.getOrderStatus() != null ? orderDTO.getOrderStatus() : OrderStatus.WAITING_PAYMENT);
+            order.setPayment(order.getOrderStatus() != null ? new Payment(null, orderDTO.getMoment(), order) : null);
 
             Set<OrderItem> orderItems = new HashSet<>(orderDTO.getOrderItems());
 
@@ -94,9 +89,23 @@ public class OrderResource {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/orders/{id}")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid OrderDTO orderDTO){
+        Optional<Order> orderOptional = Optional.ofNullable(service.findById(id));
 
-        return null;
+        if (orderOptional.isPresent()){
+            Order order = orderOptional.get();
+            order.setOrderStatus(orderDTO.getOrderStatus());
+            if (order.getOrderStatus() == 2){
+                if (order.getPayment() == null){
+                    order.setPayment(new Payment(null, orderDTO.getMoment(), order));
+                }
+            }
+
+            order = service.save(order);
+
+            return ResponseEntity.status(HttpStatus.OK).body(order);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
     }
 }
