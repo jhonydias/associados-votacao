@@ -18,25 +18,25 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/categories")
+@RequestMapping(value = "/api")
 public class CategoryResource {
 
     @Autowired
     private CategoryService service;
 
-    @GetMapping
+    @GetMapping("/categories")
     public ResponseEntity<List<Category>> findAll() {
         List<Category> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/categories/{id}")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
         Category obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
+    @PostMapping("/categories")
     public ResponseEntity<Object> insert(@RequestBody @Valid CategoryDTO categoryDTO){
         if (service.existsByName(categoryDTO.getName())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Name of Category is already in use!");
@@ -48,7 +48,7 @@ public class CategoryResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(category));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/categories/{id}")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid CategoryDTO categoryDTO){
         Optional<Category> categoryOptional = Optional.ofNullable(service.findById(id));
         if (!categoryOptional.isPresent()){
@@ -65,7 +65,7 @@ public class CategoryResource {
         return ResponseEntity.status(HttpStatus.OK).body(service.save(category));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/categories/{id}")
     public ResponseEntity<Object> deleteOne(@PathVariable(value = "id") Long id){
         Optional<Category> categoryOptional = Optional.ofNullable(service.findById(id));
         if (!categoryOptional.isPresent()){

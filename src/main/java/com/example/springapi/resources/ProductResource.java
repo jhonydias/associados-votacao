@@ -6,6 +6,8 @@ import com.example.springapi.entities.Category;
 import com.example.springapi.entities.Product;
 import com.example.springapi.services.CategoryService;
 import com.example.springapi.services.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping(value = "/api")
+@Api(value = "API Rest Products")
+@CrossOrigin(origins = "*")
 public class ProductResource {
 
     @Autowired
@@ -27,19 +31,22 @@ public class ProductResource {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping
+    @ApiOperation(value = "Retorna uma lista de produtos")
+    @GetMapping( "/products")
     public ResponseEntity<List<Product>> findAll() {
         List<Product> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "products/{id}")
+    @ApiOperation(value = "Retorna um produto pelo ID")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         Product obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
+    @PostMapping("/products")
+    @ApiOperation(value = "Cadastra um produto")
     public ResponseEntity<Object> insert(@RequestBody @Valid ProductDTO productDTO){
         var product = new Product();
         var categorySet = new HashSet<Category>();
@@ -60,7 +67,8 @@ public class ProductResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(product));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/products/{id}")
+    @ApiOperation(value = "Edita um produto")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody @Valid ProductDTO productDTO){
         Optional<Product> productOptional = Optional.ofNullable(service.findById(id));
         if (productOptional.isEmpty() || !productOptional.isPresent()){

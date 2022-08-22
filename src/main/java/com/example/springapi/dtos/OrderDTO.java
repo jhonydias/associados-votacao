@@ -14,7 +14,7 @@ import java.util.List;
 public class OrderDTO {
 
     private Instant moment = DateConfig.getDateBrazilSpNow();
-    private OrderStatus orderStatus = OrderStatus.WAITING_PAYMENT;
+    private OrderStatus orderStatus;
     private Long clientId;
     private User client;
     private List<OrderItem> orderItems;
