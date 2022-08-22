@@ -1,6 +1,7 @@
 package com.example.springapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String phone;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @JsonIgnore
