@@ -1,9 +1,7 @@
 package com.example.associadosvotacao.v1.model;
 
-import com.example.associadosvotacao.v1.model.enums.OpcaoVoto;
+import com.example.associadosvotacao.v1.model.enums.OpcaoVotoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,7 +28,7 @@ public class Voto {
     private LocalDateTime data;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "voto")
-    private OpcaoVoto voto;
+    @Column(name = "opcao_voto")
+    private OpcaoVotoEnum voto;
 
 }

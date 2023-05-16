@@ -2,7 +2,6 @@ package com.example.associadosvotacao.v1.dtos;
 
 import com.example.associadosvotacao.v1.model.Pauta;
 import com.example.associadosvotacao.v1.model.SessaoVotacao;
-import com.example.associadosvotacao.v1.model.enums.OpcaoVoto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

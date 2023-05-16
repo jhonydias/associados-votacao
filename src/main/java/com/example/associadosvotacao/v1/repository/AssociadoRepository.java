@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AssociadoRepository extends JpaRepository<Associado, Long> {
 
-    String findByLogin(String login);
+    Associado findByLogin(String login);
 
-    String findByCpf(String cpf);
+    Associado findByCpf(String cpf);
 }

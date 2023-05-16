@@ -22,6 +22,7 @@ public class SwaggerConfig {
     public static final String
             ASSOCIADO_TAG = "Associado",
             SESSAO_VOTACAO_TAG = "Sessão Votação",
+            VOTO_TAG = "Voto",
             PAUTA_TAG = "Pauta";
 
     @Bean
@@ -42,6 +43,7 @@ public class SwaggerConfig {
                 .build()
                 .tags(new Tag(ASSOCIADO_TAG, "Realizar operações com os associados"),
                         new Tag(SESSAO_VOTACAO_TAG, "Realizar operações com as sessões de votação"),
+                        new Tag(VOTO_TAG, "Realizar operações com os votos"),
                         new Tag(PAUTA_TAG, "Realizar operações com as pautas"));
     }
 

@@ -1,8 +1,6 @@
 package com.example.associadosvotacao.v1.dtos;
 
 import com.example.associadosvotacao.v1.model.Associado;
-import com.example.associadosvotacao.v1.model.SessaoVotacao;
-import com.example.associadosvotacao.v1.model.Voto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +10,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -48,13 +45,13 @@ public class AssociadoDTO extends BaseDto<Associado>{
     }
 
     @Override
-    public Associado convertToModel(Associado voto) {
-        voto.setId(this.getId());
-        voto.setLogin(this.getLogin());
-        voto.setSenha(BCrypt.hashpw(this.getSenha(), BCrypt.gensalt()));
-        voto.setNome(this.getNome());
-        voto.setCpf(this.getCpf());
-        return voto;
+    public Associado convertToModel(Associado associado) {
+        associado.setId(this.getId());
+        associado.setLogin(this.getLogin());
+        associado.setSenha(BCrypt.hashpw(this.getSenha(), BCrypt.gensalt()));
+        associado.setNome(this.getNome());
+        associado.setCpf(this.getCpf());
+        return associado;
     }
 
 }

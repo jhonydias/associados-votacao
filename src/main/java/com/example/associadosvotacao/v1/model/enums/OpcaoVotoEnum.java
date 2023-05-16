@@ -1,6 +1,6 @@
 package com.example.associadosvotacao.v1.model.enums;
 
-public enum OpcaoVoto {
+public enum OpcaoVotoEnum {
 
     SIM(1L, "Sim"),
 
@@ -11,7 +11,7 @@ public enum OpcaoVoto {
     public String descricao;
 
 
-    OpcaoVoto(Long id, String descricao) {
+    OpcaoVotoEnum(Long id, String descricao) {
         this.id= id;
         this.descricao = descricao;
     }

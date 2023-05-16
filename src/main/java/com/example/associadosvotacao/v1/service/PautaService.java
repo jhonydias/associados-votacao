@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AssociadoService {
+public class PautaService {
     @Autowired
     private AssociadoRepository associadoRepository;
 
@@ -17,7 +17,7 @@ public class AssociadoService {
         if (associadoRepository.findByCpf(associado.getCpf()) != null) {
             throw new RuntimeException("CPF já cadastrado");
         }
-
-        return associadoRepository.save(associado);
+        Associado associadoCriado = associadoRepository.save(associado);
+        return associadoCriado;
     }
 }
