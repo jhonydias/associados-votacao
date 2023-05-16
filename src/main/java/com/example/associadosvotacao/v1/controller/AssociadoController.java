@@ -7,6 +7,7 @@ import com.example.associadosvotacao.v1.annotation.ApiResponsesDefaultNoContent;
 import com.example.associadosvotacao.v1.dtos.AssociadoDTO;
 import com.example.associadosvotacao.v1.model.Associado;
 import com.example.associadosvotacao.v1.model.Pauta;
+import com.example.associadosvotacao.v1.repository.AssociadoRepository;
 import com.example.associadosvotacao.v1.repository.PautaRepository;
 import com.example.associadosvotacao.v1.service.AssociadoService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,8 @@ import java.util.Optional;
 public class AssociadoController {
     @Autowired
     private AssociadoService associadoService;
+    @Autowired
+    private AssociadoRepository associadoRepository;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,5 +36,12 @@ public class AssociadoController {
     public ResponseEntity<Associado> criarAssociado(@RequestBody AssociadoDTO associado) {
         Associado associadoCriado = associadoService.criarAssociado(associado.convertToModel());
         return ResponseEntity.status(HttpStatus.CREATED).body(associadoCriado);
+    }
+
+    @GetMapping
+    @ApiOperation(value = "Lista todos os usuários")
+    @ApiResponsesDefault
+    public List<Associado> listar() {
+        return associadoRepository.findAll();
     }
 }

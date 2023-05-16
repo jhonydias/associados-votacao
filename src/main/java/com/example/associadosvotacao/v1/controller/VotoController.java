@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/votos")
 @Api(value = "Votos", tags = {SwaggerConfig.VOTO_TAG})
@@ -35,11 +37,11 @@ public class VotoController {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(votoService.listarVotos(pageable));
     }
-    @GetMapping("/resultado-votacao")
+    @GetMapping("/resultado-votacao/{idSessao}")
     @ApiOperation(value = "Conta todos os votos")
     @ApiResponsesDefault
-    public ResponseEntity<ResultadoVotacaoResponse> listarVotos() {
-        return ResponseEntity.ok(votoService.countVotos());
+    public ResponseEntity<ResultadoVotacaoResponse> listarVotos(@RequestParam Long idSessao) {
+        return ResponseEntity.ok(votoService.countVotos(idSessao));
     }
 
 

@@ -13,6 +13,6 @@ public interface VotoRepository extends JpaRepository<Voto, Long> {
 
     boolean existsByAssociadoAndSessaoVotacao(Associado associado, SessaoVotacao sessaoVotacao);
     int countBySessaoVotacao(SessaoVotacao sessaoVotacao);
-    @Query("SELECT COUNT(v) FROM Voto v WHERE v.voto = :opcaoVotoEnum")
-    Long countByOpcaoVoto(OpcaoVotoEnum opcaoVotoEnum);
+    @Query("SELECT COUNT(v) FROM Voto v WHERE v.voto = :opcaoVotoEnum and v.sessaoVotacao.id =:idSessao")
+    Long countByOpcaoVotoAndSessaoVotacao(OpcaoVotoEnum opcaoVotoEnum, Long idSessao);
 }

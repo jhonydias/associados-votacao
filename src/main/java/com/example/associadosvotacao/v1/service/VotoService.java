@@ -39,9 +39,9 @@ public class VotoService {
         sessaoVotacaoService.countVotos(voto.getSessaoVotacao());
         return savedVoto;
     }
-    public ResultadoVotacaoResponse countVotos() {
-        Long simVotes = votoRepository.countByOpcaoVoto(OpcaoVotoEnum.SIM);
-        Long naoVotes = votoRepository.countByOpcaoVoto(OpcaoVotoEnum.NAO);
+    public ResultadoVotacaoResponse countVotos(Long idSessao) {
+        Long simVotes = votoRepository.countByOpcaoVotoAndSessaoVotacao(OpcaoVotoEnum.SIM, idSessao);
+        Long naoVotes = votoRepository.countByOpcaoVotoAndSessaoVotacao(OpcaoVotoEnum.NAO, idSessao);
 
         return new ResultadoVotacaoResponse(simVotes, naoVotes);
     }

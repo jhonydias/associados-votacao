@@ -62,10 +62,10 @@ class VotoControllerTest {
         resultadoVotacaoResponse.setNaoVotes(5L);
 
         // Configuração do comportamento do serviço mockado
-        Mockito.when(votoService.countVotos()).thenReturn(resultadoVotacaoResponse);
+        Mockito.when(votoService.countVotos(10L)).thenReturn(resultadoVotacaoResponse);
 
         // Chamada ao endpoint
-        ResponseEntity<ResultadoVotacaoResponse> response = votoController.listarVotos();
+        ResponseEntity<ResultadoVotacaoResponse> response = votoController.listarVotos(10L);
 
         // Verificação do status code da resposta
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -77,7 +77,7 @@ class VotoControllerTest {
         assertEquals(5, responseBody.getNaoVotes());
 
         // Verificação do serviço chamado corretamente
-        verify(votoService, times(1)).countVotos();
+        verify(votoService, times(1)).countVotos(10L);
         verifyNoMoreInteractions(votoService);
     }
 
