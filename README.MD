@@ -36,4 +36,5 @@ O projeto "Associados Votação" é um sistema de gerenciamento de votações pa
 
    ```bash
    mvn spring-boot:run
-5. O sistema estará disponível em http://localhost:8080.
+5. O sistema estará disponível em : http://localhost:8080.
+6. O Swagger da aplicação estará disponível em : http://localhost:8080/associados-votacao/swagger-ui/#/.

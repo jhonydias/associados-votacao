@@ -54,7 +54,7 @@ public class SwaggerConfig {
                 .description("API REST de Votação de Pautas.")
                 .version("1.0.0")
                 .contact(new Contact("Jhony Dias",
-                        "https://github.com/jhonydias/spring-users-api",
+                        "https://github.com/jhonydias/associados-votacao",
                         "jhonydias.work@gmail.com"))
                 .build();
     }
