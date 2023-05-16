@@ -26,10 +26,10 @@ O projeto "Associados Votação" é um sistema de gerenciamento de votações pa
 
    ```bash
    git clone https://github.com/jhonydias/associados-votacao
-2. Acesse o diretório do projeto::
+2. Acesse o diretório do projeto:
 
    ```bash
-   cd associados-votacao2. 
+   cd associados-votacao. 
    
 3. Configure as informações de acesso ao banco de dados no arquivo application.properties:
 4. Execute o seguinte comando para compilar e executar o projeto:
